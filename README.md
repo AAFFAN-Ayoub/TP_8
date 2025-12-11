@@ -1,7 +1,4 @@
 # TP_8
-C'est un excellent projet à documenter. Voici une description complète et structurée que vous pouvez utiliser pour votre dépôt GitHub (`README.md`) pour le TP 8, en insistant sur les aspects techniques et les outils utilisés :
-
-***
 
 # Projet DApp Hello World (Flutter & Solidity)
 
