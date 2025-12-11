@@ -1,44 +1,96 @@
-# TP_8
+### Copie le code ci-dessous :
 
-# Projet DApp Hello World (Flutter & Solidity)
+````markdown
+# 🌍 Hello World Dapp
 
-Ce projet est une **Application Décentralisée (DApp)** basique qui démontre l'intégration d'un front-end mobile développé en **Flutter** avec un Contrat Intelligent (Smart Contract) écrit en **Solidity** et déployé sur une blockchain locale Ethereum.
+Une Application Décentralisée (DApp) simple développée avec **Flutter** et **Solidity**. 
+Ce projet permet d'interagir avec une blockchain Ethereum locale pour lire et modifier un état (un nom) stocké dans un Smart Contract.
 
-L'objectif principal était de maîtriser la chaîne d'outils de développement Ethereum (Truffle et Ganache) et de réaliser la liaison (Contract Linking) permettant au mobile d'interagir avec les données *on-chain*.
+![Dapp Screenshot](lien_vers_ton_image_interface.png)
+*(Pense à ajouter une capture d'écran de ton interface ici)*
 
-## 🚀 Caractéristiques du Projet
+## 🚀 Fonctionnalités
 
-L'application implémente un mécanisme simple de lecture et d'écriture sur la blockchain :
-*   **Contrat Intelligent `HelloWorld.sol` :** Définit une variable d'état publique, `yourName`, initialisée à `"Unknown"` via le constructeur.
-*   **Lecture des Données :** La DApp récupère et affiche la valeur actuelle de `yourName` depuis le contrat.
-*   **Écriture des Données :** L'utilisateur peut mettre à jour la valeur de `yourName` en envoyant une transaction à la fonction `setName(string memory nm)` du contrat intelligent.
+- **Lecture de la Blockchain :** Récupère et affiche le nom stocké actuellement dans le contrat ("Hello [Nom]").
+- **Écriture sur la Blockchain :** Envoie une transaction pour modifier le nom.
+- **Gestion d'État :** Indicateur de chargement pendant la validation de la transaction.
+- **Intégration Web3 :** Connexion avec le portefeuille MetaMask.
 
-## 🛠️ Technologies et Outils Utilisés
+## 🛠 Technologies Utilisées
 
-| Composant | Technologie/Langage | Rôle | Source |
-| :--- | :--- | :--- | :--- |
-| **Front-end / UI** | Flutter & Dart | Interface mobile décentralisée (DApp) | |
-| **Blockchain Locale** | **Ganache** | Blockchain personnelle pour le développement et l'exécution des tests | |
-| **Smart Contract** | **Solidity** | Langage de programmation du contrat `HelloWorld` | |
-| **Framework** | **Truffle Suite** | Environnement de développement, compilation et migration des contrats Ethereum | |
-| **Liaison Contrat (Dart)** | `web3dart` / `provider` | Permet la connexion au nœud RPC Ganache (`http://127.0.0.1:7545`) et l'envoi de transactions signées par la clé privée du compte de développement | |
+- **Frontend :** Flutter (Web)
+- **Smart Contract :** Solidity
+- **Blockchain Locale :** Ganache
+- **Wallet :** MetaMask
+- **Librairie Dart :** `web3dart` / `http`
 
-## ⚙️ Environnement de Développement et Déploiement
+## ⚙️ Prérequis
 
-Le workflow de développement est structuré autour du framework Truffle :
+Avant de commencer, assurez-vous d'avoir installé :
+- [Flutter SDK](https://flutter.dev/docs/get-started/install)
+- [Ganache](https://trufflesuite.com/ganache/) (pour la blockchain locale)
+- [Extension MetaMask](https://metamask.io/) sur votre navigateur.
 
-1.  **Préparation de l'environnement :** Installation de Node.js et de **Truffle** (`npm install -g truffle`).
-2.  **Initialisation du Projet :** Création du projet Truffle (`truffle init`) au sein du répertoire Flutter. Les répertoires `contracts/`, `migrations/`, et `test/` sont créés.
-3.  **Contrat (Solidity) :** Le contrat `HelloWorld.sol` est écrit dans le répertoire `contracts/`.
-4.  **Compilation et Migration :**
-    *   Le contrat est compilé (`truffle compile`).
-    *   L'environnement Ganache est démarré, créant une blockchain locale généralement sur le port 7545.
-    *   Le fichier `truffle-config.js` est configuré pour définir les paramètres du réseau de développement et spécifier le répertoire de construction des artefacts (`./src/artifacts/`).
-    *   Le contrat est déployé sur Ganache (`truffle migrate`).
-5.  **Tests (JavaScript) :** Des tests unitaires sont écrits dans le répertoire `test/` pour vérifier que les fonctions du contrat (comme `setName`) fonctionnent correctement en utilisant l'assertion.
-6.  **Intégration Flutter :** Le fichier `contract_linking.dart` est utilisé pour :
-    *   Lire l'**ABI** et l'adresse du contrat à partir du fichier `HelloWorld.json` (artefact).
-    *   Établir la connexion au client RPC Ganache.
-    *   Utiliser la **clé privée** du compte Ganache pour signer les transactions envoyées lors de l'appel de la fonction `setName`.
+## 📦 Installation et Configuration
 
-Ce projet représente une démonstration fonctionnelle de la manière dont les applications mobiles peuvent interagir directement avec les données immuables de la blockchain Ethereum via un contrat intelligent.
+### 1. Cloner le projet
+```bash
+git clone [https://github.com/ton-username/ton-repo.git](https://github.com/ton-username/ton-repo.git)
+cd ton-repo
+````
+
+### 2\. Configurer la Blockchain (Ganache)
+
+1.  Lancez **Ganache**.
+2.  Créez un nouveau workspace (ou utilisez "Quickstart").
+3.  Notez le **RPC Server** (ex: `http://127.0.0.1:7545`) et le **Network ID** (ex: `5777`).
+
+### 3\. Déployer le Smart Contract
+
+*(Si tu utilises Truffle ou Hardhat)*
+
+```bash
+truffle migrate --reset
+# ou
+npx hardhat run scripts/deploy.js --network localhost
+```
+
+> **Important :** Copiez l'adresse du contrat déployé et mettez-la à jour dans votre fichier Flutter (généralement dans `lib/services/contract_service.dart` ou `main.dart`).
+
+### 4\. Configurer MetaMask
+
+1.  Ajoutez un réseau personnalisé dans MetaMask :
+      - **Nom :** Localhost Ganache
+      - **RPC URL :** `http://127.0.0.1:7545`
+      - **Chain ID :** `1337` (ou `5777` selon votre version de Ganache)
+      - **Symbole :** ETH
+2.  Importez un compte depuis Ganache (copiez la clé privée d'un compte avec 100 ETH).
+
+### 5\. Lancer l'Application
+
+Lancez l'application sur Chrome :
+
+```bash
+flutter run -d chrome --web-port=3000
+```
+
+*L'application sera accessible sur `http://localhost:3000`.*
+
+## 📝 Utilisation
+
+1.  Ouvrez l'application dans votre navigateur.
+2.  Assurez-vous que MetaMask est connecté au réseau **Localhost Ganache**.
+3.  Saisissez un nom dans le champ de texte.
+4.  Cliquez sur **"Set Name"**.
+5.  MetaMask s'ouvrira pour demander la signature de la transaction.
+6.  Une fois confirmée, l'interface se mettra à jour avec "Hello [Votre Nom]".
+
+## 🐛 Problèmes Courants (Troubleshooting)
+
+  - **Chargement infini ?** Vérifiez que vous avez bien confirmé la transaction dans la fenêtre pop-up de MetaMask (parfois cachée).
+  - **Erreur RPC ?** Vérifiez que Ganache est bien lancé et que l'URL RPC dans MetaMask correspond exactement à celle de Ganache.
+  - **Nonce Error ?** Si vous avez redémarré Ganache, réinitialisez votre compte MetaMask : *Paramètres \> Avancé \> Effacer l'activité de l'onglet*.
+
+-----
+
+Autheur : **AAFFAN Ayoub**
