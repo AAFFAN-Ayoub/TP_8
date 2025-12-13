@@ -6,9 +6,6 @@
 Une Application Décentralisée (DApp) simple développée avec **Flutter** et **Solidity**. 
 Ce projet permet d'interagir avec une blockchain Ethereum locale pour lire et modifier un état (un nom) stocké dans un Smart Contract.
 
-![Dapp Screenshot](lien_vers_ton_image_interface.png)
-*(Pense à ajouter une capture d'écran de ton interface ici)*
-
 ## 🚀 Fonctionnalités
 
 - **Lecture de la Blockchain :** Récupère et affiche le nom stocké actuellement dans le contrat ("Hello [Nom]").
